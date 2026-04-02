@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(email) {
+      return isAuthenticated() && request.auth.token.email == email;
+    }
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['email']) &&
+             data.email is string &&
+             (!('purchasedCategories' in data) || data.purchasedCategories is list);
+    }
+
+    match /users/{email} {
+      // Users can read their own data
+      allow read: if isOwner(email);
+      
+      // Only admins or the system can create/update (for now we allow the user to update their own profile if needed, 
+      // but purchases should ideally be server-side via webhook)
+      // For this specific app, the webhook will handle the updates.
+      // We'll allow the user to create their own profile on first login.
+      allow create: if isOwner(email) && isValidUser(request.resource.data);
+      allow update: if isOwner(email) && isValidUser(request.resource.data);
+    }
+  }
+}

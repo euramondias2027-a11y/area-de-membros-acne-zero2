@@ -1,0 +1,24 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and purchased categories",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "purchasedCategories": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email"]
+    }
+  },
+  "firestore": {
+    "/users/{email}": {
+      "schema": "User",
+      "description": "Collection of users indexed by email"
+    }
+  }
+}

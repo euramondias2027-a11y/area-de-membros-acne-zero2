@@ -1,0 +1,21 @@
+
+{
+  "name": "Acne Zero",
+  "short_name": "Acne Zero",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0e14",
+  "theme_color": "#ff2d75",
+  "icons": [
+    {
+      "src": "https://i.imgur.com/nPJyxaB.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://i.imgur.com/nPJyxaB.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
